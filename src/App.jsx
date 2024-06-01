@@ -5,10 +5,11 @@ import ContactForm from "./components/ContactForm/ContactForm.jsx";
 import SearchBox from "./components/SearchBox/SearchBox.jsx";
 import ContactList from "./components/ContactList/ContactList.jsx";
 import "./App.css";
+
 function App() {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  const filter = useSelector((state) => state.filters.name);
+  const filter = useSelector((state) => state.filters?.name || "");
 
   const handleAddContact = (newContact) => {
     dispatch(addContact(newContact));
@@ -18,8 +19,9 @@ function App() {
     dispatch(changeFilter(filterValue));
   };
 
-  const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
+  const filteredContacts = contacts.filter(
+    (contact) =>
+      contact.name && contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
   return (
